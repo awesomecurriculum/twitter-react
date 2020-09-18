@@ -1,8 +1,12 @@
 import React from 'react';
+import RegistrationForm from './components/sessions/RegistrationForm';
 
 function App() {
   return (
-    <h1>Hello world!</h1>
+    <div>
+      <h1>Twitter Lite</h1>
+      <RegistrationForm />
+    </div>
   );
 }
 
