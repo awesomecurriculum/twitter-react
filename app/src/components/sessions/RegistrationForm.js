@@ -16,7 +16,6 @@ class RegistrationForm extends Component {
 
   registerUser() {}
   render() {
-    // TODO: render registration form
     const { username, email, password } = this.state;
     return (
       <form onSubmit={this.registerUser}>
