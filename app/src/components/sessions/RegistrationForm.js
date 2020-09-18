@@ -14,7 +14,37 @@ class RegistrationForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  registerUser() {}
+  registerUser = async e => {
+    // Submit events automatically prompt a GET request to re-render the page
+    e.preventDefault();
+
+    const { username, email, password } = this.state;
+
+    try {
+      const res = await fetch('/users', {
+        method: 'POST',
+        body: JSON.stringify({ username, email, password }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      // fetch API does not throw errors
+      if (!res.ok) throw res;
+
+      const data = await res.json();
+
+      const {
+        token,
+        user: { id },
+      } = data;
+
+      console.log(`JWT: ${token}, User ID: ${id}`);
+    } catch (e) {
+      console.error(e);
+    }
+
+    // TODO: send a POST request to create a user
+  };
+
   render() {
     const { username, email, password } = this.state;
     return (
@@ -23,6 +53,7 @@ class RegistrationForm extends Component {
         <input type='text' name='username' placeholder='Enter Username' value={username} onChange={this.updateField}></input>
         <input type='email' name='email' placeholder='Enter Email' value={email} onChange={this.updateField}></input>
         <input type='password' name='password' placeholder='Enter Password' value={password} onChange={this.updateField}></input>
+        <button type='submit'>Submit</button>
       </form>
     );
   }
