@@ -1,12 +1,12 @@
 import React from 'react';
-import RegistrationForm from './components/sessions/RegistrationForm';
 import { Switch, Route, NavLink } from 'react-router-dom';
 import Home from './components/Home';
 import Profile from './components/Profile';
+import RegistrationForm from './components/sessions/RegistrationForm';
 import LoginForm from './components/sessions/LoginForm';
 import { ProtectedRoute, AuthRoute } from './Routes';
 
-function App() {
+function App({ currentUserId }) {
   return (
     <div>
       <h1>Twitter Lite</h1>
@@ -21,10 +21,10 @@ function App() {
       </nav>
 
       <Switch>
-        <AuthRoute path='/register' component={RegistrationForm}></AuthRoute>
-        <AuthRoute path='/login' component={LoginForm}></AuthRoute>
-        <ProtectedRoute path='/users/:userId' component={Profile}></ProtectedRoute>
-        <ProtectedRoute exact path='/' component={Home}></ProtectedRoute>
+        <AuthRoute path='/register' component={RegistrationForm} currentUserId={currentUserId} />
+        <AuthRoute path='/login' component={LoginForm} currentUserId={currentUserId} />
+        <ProtectedRoute path='/users/:userId' component={Profile} currentUserId={currentUserId} />
+        <ProtectedRoute exact path='/' component={Home} currentUserId={currentUserId} />
       </Switch>
     </div>
   );

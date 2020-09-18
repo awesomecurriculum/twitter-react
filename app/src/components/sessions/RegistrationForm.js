@@ -11,7 +11,7 @@ class RegistrationForm extends Component {
       password: '',
     };
   }
-  updateField = e => {
+  update = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -31,14 +31,12 @@ class RegistrationForm extends Component {
       // fetch API does not throw errors
       if (!res.ok) throw res;
 
-      const data = await res.json();
-
       const {
         token,
         user: { id },
-      } = data;
+      } = await res.json();
 
-      this.props.updateContext(token, id);
+      this.props.login(token, id);
     } catch (e) {
       console.error(e);
     }
@@ -51,15 +49,17 @@ class RegistrationForm extends Component {
     return (
       <form onSubmit={this.registerUser}>
         <h2>Register</h2>
-        <input type='text' name='username' placeholder='Enter Username' value={username} onChange={this.updateField}></input>
-        <input type='email' name='email' placeholder='Enter Email' value={email} onChange={this.updateField}></input>
-        <input type='password' name='password' placeholder='Enter Password' value={password} onChange={this.updateField}></input>
-        <button type='submit'>Submit</button>
+        <input type='text' name='username' placeholder='Enter Username' value={username} onChange={this.update}></input>
+        <input type='email' name='email' placeholder='Enter Email' value={email} onChange={this.update}></input>
+        <input type='password' name='password' placeholder='Enter Password' value={password} onChange={this.update}></input>
+        <button type='submit'>Sign Up</button>
       </form>
     );
   }
 }
 
-const RegistrationFormWithContext = props => <UserContext.Consumer>{value => <RegistrationForm {...props} />} </UserContext.Consumer>;
+const RegistrationFormWithContext = props => {
+  return <UserContext.Consumer>{value => <RegistrationForm {...props} login={value.login} />}</UserContext.Consumer>;
+};
 
 export default RegistrationFormWithContext;
