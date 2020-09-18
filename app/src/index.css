@@ -1,1 +1,4 @@
-/* TODO Add site wide styles */
+.active {
+  font-weight: 700px;
+  text-decoration: none;
+}
