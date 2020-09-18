@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import UserContext from '../../contexts/UserContext';
 
 class RegistrationForm extends Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class RegistrationForm extends Component {
         user: { id },
       } = data;
 
-      console.log(`JWT: ${token}, User ID: ${id}`);
+      this.props.updateContext(token, id);
     } catch (e) {
       console.error(e);
     }
@@ -59,4 +60,6 @@ class RegistrationForm extends Component {
   }
 }
 
-export default RegistrationForm;
+const RegistrationFormWithContext = props => <UserContext.Consumer>{value => <RegistrationForm {...props} />} </UserContext.Consumer>;
+
+export default RegistrationFormWithContext;
